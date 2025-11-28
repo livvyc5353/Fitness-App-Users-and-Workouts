@@ -1,0 +1,23 @@
+{
+	"meta":{
+		"version": "v1",
+		"app_name": "fitness_app_users_and_workouts",
+		"log_prefix": "fitness_app_users_and_workouts"
+	},
+	"database":{
+		"pool":{
+			"name": "app_name_db_bool",
+			"size": 10,
+			"reset_session": true,
+			"use_pure": true
+		},
+		"connection":{
+			"config":{
+				"database": "database_name",
+				"user": "database_username",
+				"host": "localhost",
+				"port": 8889
+			}
+		}
+	}
+}

@@ -2,7 +2,8 @@
 
 import json
 from argparse import ArgumentParser
-from fitness_app_users_and_workouts.presentation_layer.user_interface import UserInterface
+from fitness_app_users_and_workouts.persistence_layer.mysql_persistence_wrapper \
+	  import MySQLPersistenceWrapper
 
 
 
@@ -15,10 +16,7 @@ def main():
 		with open(args.configfile, 'r') as f:
 			config = json.loads(f.read())
 
-	ui = UserInterface(config)
-	ui.start()
-			
-		
+		db = MySQLPersistenceWrapper(config)
 
 
 def configure_and_parse_commandline_arguments():

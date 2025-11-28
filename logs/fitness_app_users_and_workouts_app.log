@@ -3,3 +3,15 @@ DEBUG:MySQLPersistenceWrapper:2025-11-28 15:24:46,688:__init__: DB Connection Co
 DEBUG:AppServices:2025-11-28 15:24:46,688:__init__:It works!
 DEBUG:UserInterface:2025-11-28 15:24:46,689:__init__:It works!
 DEBUG:UserInterface:2025-11-28 15:24:46,689:start: User interface started!
+DEBUG:MySQLPersistenceWrapper:2025-11-28 18:33:49,827:__init__:It works!
+DEBUG:MySQLPersistenceWrapper:2025-11-28 18:33:49,829:__init__: DB Connection Config Dict: {'database': 'database_name', 'user': 'database_username', 'host': 'localhost', 'port': 8889}
+DEBUG:AppServices:2025-11-28 18:33:49,829:__init__:It works!
+DEBUG:UserInterface:2025-11-28 18:33:49,830:__init__:It works!
+DEBUG:UserInterface:2025-11-28 18:33:49,830:start: User interface started!
+DEBUG:MySQLPersistenceWrapper:2025-11-28 18:34:34,991:__init__:It works!
+DEBUG:MySQLPersistenceWrapper:2025-11-28 18:34:34,991:__init__: DB Connection Config Dict: {'database': 'database_name', 'user': 'database_username', 'host': 'localhost', 'port': 8889}
+DEBUG:AppServices:2025-11-28 18:34:34,991:__init__:It works!
+DEBUG:UserInterface:2025-11-28 18:34:34,991:__init__:It works!
+DEBUG:UserInterface:2025-11-28 18:34:34,991:start: User interface started!
+DEBUG:MySQLPersistenceWrapper:2025-11-28 18:44:12,496:__init__:It works!
+DEBUG:MySQLPersistenceWrapper:2025-11-28 18:44:12,496:__init__: DB Connection Config Dict: {'database': 'database_name', 'user': 'database_username', 'host': 'localhost', 'port': 8889}

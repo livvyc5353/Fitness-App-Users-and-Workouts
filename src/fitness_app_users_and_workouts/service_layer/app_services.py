@@ -1,25 +1,19 @@
-"""Implements the application service layer for the Fitness App."""
+"""Implements AppServices Class."""
 
 import json
-import inspect
 from typing import List, Dict
 from fitness_app_users_and_workouts.application_base import ApplicationBase
 from fitness_app_users_and_workouts.persistence_layer.mysql_persistence_wrapper import MySQLPersistenceWrapper
-
+import inspect
 
 class AppServices(ApplicationBase):
     """AppServices class for interacting with the Fitness App database."""
-
     def __init__(self, config: dict) -> None:
         """Initializes object."""
         self._config_dict = config
         self.META = config["meta"]
-
-        super().__init__(
-            subclass_name=self.__class__.__name__,
-            logfile_prefix_name=self.META["log_prefix"]
-        )
-
+        super().__init__(subclass_name=self.__class__.__name__,
+                logfile_prefix_name=self.META["log_prefix"])
         self.DB = MySQLPersistenceWrapper(config)
 
     # ============================================================
@@ -32,6 +26,7 @@ class AppServices(ApplicationBase):
         try:
             results = self.DB.select_all_users()
             return json.dumps(results)
+        
         except Exception as e:
             self._logger.log_error(f"{inspect.currentframe().f_code.co_name}: {e}")
             return "[]"
@@ -46,6 +41,7 @@ class AppServices(ApplicationBase):
         try:
             results = self.DB.select_all_workouts()
             return json.dumps(results)
+        
         except Exception as e:
             self._logger.log_error(f"{inspect.currentframe().f_code.co_name}: {e}")
             return "[]"
@@ -56,6 +52,7 @@ class AppServices(ApplicationBase):
         try:
             results = self.DB.select_workout_exercises(workout_id)
             return json.dumps(results)
+        
         except Exception as e:
             self._logger.log_error(f"{inspect.currentframe().f_code.co_name}: {e}")
             return "[]"
@@ -70,6 +67,7 @@ class AppServices(ApplicationBase):
         try:
             results = self.DB.select_user_favorites(user_id)
             return json.dumps(results)
+        
         except Exception as e:
             self._logger.log_error(f"{inspect.currentframe().f_code.co_name}: {e}")
             return "[]"
@@ -80,7 +78,7 @@ class AppServices(ApplicationBase):
         try:
             results = self.DB.select_user_completed(user_id)
             return json.dumps(results)
+        
         except Exception as e:
             self._logger.log_error(f"{inspect.currentframe().f_code.co_name}: {e}")
             return "[]"
-

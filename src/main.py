@@ -5,6 +5,8 @@ from argparse import ArgumentParser
 from fitness_app_users_and_workouts.persistence_layer.mysql_persistence_wrapper import MySQLPersistenceWrapper
 from fitness_app_users_and_workouts.service_layer.app_services \
     import AppServices
+from fitness_app_users_and_workouts.presentation_layer.user_interface import UserInterface
+
 
 def main():
     """Entry point."""
@@ -13,6 +15,10 @@ def main():
     # Load config file
     with open(args.configfile, 'r') as f:
         config = json.loads(f.read())
+
+
+    ui = UserInterface(config)
+    ui.start()
 
     service_layer = AppServices(config)
     users_list = service_layer.get_all_users_as_json()

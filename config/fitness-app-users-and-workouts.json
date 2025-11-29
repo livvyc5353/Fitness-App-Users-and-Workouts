@@ -6,17 +6,18 @@
 	},
 	"database":{
 		"pool":{
-			"name": "app_name_db_bool",
+			"name": "fitness_app_pool",
 			"size": 10,
 			"reset_session": true,
 			"use_pure": true
 		},
 		"connection":{
 			"config":{
-				"database": "database_name",
-				"user": "database_username",
+				"database": "fitness_app",
+				"password": "root",
+				"user": "root",
 				"host": "localhost",
-				"port": 8889
+				"port": 3306
 			}
 		}
 	}

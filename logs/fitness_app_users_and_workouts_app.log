@@ -1,17 +1,17 @@
-DEBUG:MySQLPersistenceWrapper:2025-11-28 15:24:46,687:__init__:It works!
-DEBUG:MySQLPersistenceWrapper:2025-11-28 15:24:46,688:__init__: DB Connection Config Dict: {'database': 'database_name', 'user': 'database_username', 'host': 'localhost', 'port': 8889}
-DEBUG:AppServices:2025-11-28 15:24:46,688:__init__:It works!
-DEBUG:UserInterface:2025-11-28 15:24:46,689:__init__:It works!
-DEBUG:UserInterface:2025-11-28 15:24:46,689:start: User interface started!
-DEBUG:MySQLPersistenceWrapper:2025-11-28 18:33:49,827:__init__:It works!
-DEBUG:MySQLPersistenceWrapper:2025-11-28 18:33:49,829:__init__: DB Connection Config Dict: {'database': 'database_name', 'user': 'database_username', 'host': 'localhost', 'port': 8889}
-DEBUG:AppServices:2025-11-28 18:33:49,829:__init__:It works!
-DEBUG:UserInterface:2025-11-28 18:33:49,830:__init__:It works!
-DEBUG:UserInterface:2025-11-28 18:33:49,830:start: User interface started!
-DEBUG:MySQLPersistenceWrapper:2025-11-28 18:34:34,991:__init__:It works!
-DEBUG:MySQLPersistenceWrapper:2025-11-28 18:34:34,991:__init__: DB Connection Config Dict: {'database': 'database_name', 'user': 'database_username', 'host': 'localhost', 'port': 8889}
-DEBUG:AppServices:2025-11-28 18:34:34,991:__init__:It works!
-DEBUG:UserInterface:2025-11-28 18:34:34,991:__init__:It works!
-DEBUG:UserInterface:2025-11-28 18:34:34,991:start: User interface started!
-DEBUG:MySQLPersistenceWrapper:2025-11-28 18:44:12,496:__init__:It works!
-DEBUG:MySQLPersistenceWrapper:2025-11-28 18:44:12,496:__init__: DB Connection Config Dict: {'database': 'database_name', 'user': 'database_username', 'host': 'localhost', 'port': 8889}
+DEBUG:MySQLPersistenceWrapper:2025-11-29 11:29:58,425:DB Connection Config Dict: {'database': 'fitness_app', 'user': 'root', 'host': 'localhost', 'port': 3306, 'password': 'root'}
+DEBUG:MySQLPersistenceWrapper:2025-11-29 11:29:58,425:Creating connection pool...
+DEBUG:MySQLPersistenceWrapper:2025-11-29 11:29:58,541:Connection pool successfully created!
+DEBUG:MySQLPersistenceWrapper:2025-11-29 11:44:59,446:DB Connection Config Dict: {'database': 'fitness_app', 'user': 'root', 'host': 'localhost', 'port': 3306, 'password': 'root'}
+DEBUG:MySQLPersistenceWrapper:2025-11-29 11:44:59,447:Creating connection pool...
+DEBUG:MySQLPersistenceWrapper:2025-11-29 11:44:59,549:Connection pool successfully created!
+DEBUG:MySQLPersistenceWrapper:2025-11-29 11:51:22,909:DB Connection Config Dict: {'database': 'fitness_app', 'user': 'root', 'host': 'localhost', 'port': 3306, 'password': 'root'}
+DEBUG:MySQLPersistenceWrapper:2025-11-29 11:51:22,909:Creating connection pool...
+DEBUG:MySQLPersistenceWrapper:2025-11-29 11:51:23,009:Connection pool successfully created!
+DEBUG:AppServices:2025-11-29 11:51:23,009:__init__:It works!
+DEBUG:MySQLPersistenceWrapper:2025-11-29 11:57:25,726:DB Connection Config Dict: {'database': 'fitness_app', 'user': 'root', 'host': 'localhost', 'port': 3306, 'password': 'root'}
+DEBUG:MySQLPersistenceWrapper:2025-11-29 11:57:25,726:Creating connection pool...
+DEBUG:MySQLPersistenceWrapper:2025-11-29 11:57:25,829:Connection pool successfully created!
+DEBUG:AppServices:2025-11-29 11:57:25,829:In get_all_users_as_json()...
+DEBUG:MySQLPersistenceWrapper:2025-11-29 11:57:25,829:DB Connection Config Dict: {'database': 'fitness_app', 'user': 'root', 'host': 'localhost', 'port': 3306, 'password': 'root'}
+DEBUG:MySQLPersistenceWrapper:2025-11-29 11:57:25,829:Creating connection pool...
+DEBUG:MySQLPersistenceWrapper:2025-11-29 11:57:25,859:Connection pool successfully created!

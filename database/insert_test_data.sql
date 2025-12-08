@@ -1,3 +1,4 @@
+
  USE `fitness_app`;
 
 -- Users

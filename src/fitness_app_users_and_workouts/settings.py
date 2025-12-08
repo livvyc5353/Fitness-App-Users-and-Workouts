@@ -1,4 +1,4 @@
-"""Manage applicaion settings."""
+# Manage applicaion settings
 
 import json
 import platform
@@ -45,9 +45,7 @@ class Settings():
 
     def read_settings_file_from_location(self, 
                                         filename:str='app_settings.json')->dict:
-        """Read settings file and return dictionary.
-        If settings file does not exist create default settings file.
-        """
+        
         settings = {}
         try:
             with open(filename, 'r') as f:

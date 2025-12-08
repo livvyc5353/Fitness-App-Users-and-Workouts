@@ -71,9 +71,8 @@ class MySQLPersistenceWrapper(ApplicationBase):
             ],
         )
 
-        # ============================================================
-        #                          SQL QUERY CONSTANTS
-        # ============================================================
+# SQL QUERY CONSTANTS
+
 
         # All users
         self.SELECT_ALL_USERS = (
@@ -115,12 +114,13 @@ class MySQLPersistenceWrapper(ApplicationBase):
             "WHERE we.workout_id = %s"
         )
 
-    # ============================================================
-    # PUBLIC SELECTION METHODS
-    # ============================================================
+
+
+
+# PUBLIC SELECTION METHODS
+
 
     def select_all_users(self) -> List[User]:
-        """Returns all users as User objects (without workouts attached)."""
         cursor = None
         results = None
         user_list: List[User] = []
@@ -143,7 +143,6 @@ class MySQLPersistenceWrapper(ApplicationBase):
             return []
 
     def select_all_workouts(self) -> List[Workout]:
-        """Returns a list of all workout objects, each with exercises."""
         cursor = None
         results = None
         workout_list: List[Workout] = []
@@ -157,7 +156,6 @@ class MySQLPersistenceWrapper(ApplicationBase):
 
             workout_list = self._populate_workout_objects(results)
 
-            # Populate exercises for each workout
             for w in workout_list:
                 w.exercises = self.select_workout_exercises(w.id)
 
@@ -170,7 +168,6 @@ class MySQLPersistenceWrapper(ApplicationBase):
             return []
 
     def select_all_exercises(self) -> List[Exercise]:
-        """Return all exercises."""
         cursor = None
         results = None
         exercises: List[Exercise] = []
@@ -198,7 +195,6 @@ class MySQLPersistenceWrapper(ApplicationBase):
             return []
 
     def select_user_completed(self, user_id: int) -> List[Workout]:
-        """Returns completed workouts for a user as Workout objects."""
         cursor = None
         results = None
         completed_workouts: List[Workout] = []
@@ -229,7 +225,6 @@ class MySQLPersistenceWrapper(ApplicationBase):
             return []
 
     def select_user_favorites(self, user_id: int) -> List[Workout]:
-        """Returns favorited workouts by a user as Workout objects."""
         cursor = None
         results = None
         favorite_workouts: List[Workout] = []
@@ -259,7 +254,6 @@ class MySQLPersistenceWrapper(ApplicationBase):
             return []
 
     def select_workout_exercises(self, workout_id: int) -> List[Exercise]:
-        """Returns Exercise objects for a workout."""
         cursor = None
         results = None
         exercises: List[Exercise] = []
@@ -287,12 +281,10 @@ class MySQLPersistenceWrapper(ApplicationBase):
             )
             return []
 
-    # ============================================================
-    # INSERT / LINK METHODS
-    # ============================================================
+ # INSERT / LINK METHODS
+
 
     def insert_user(self, user: User) -> Optional[int]:
-        """Insert a new user; return new user id or None."""
         try:
             connection = self._connection_pool.get_connection()
             with connection:
@@ -321,7 +313,6 @@ class MySQLPersistenceWrapper(ApplicationBase):
             return None
 
     def insert_workout(self, workout: Workout) -> Optional[int]:
-        """Insert a new workout; return new workout id or None."""
         try:
             connection = self._connection_pool.get_connection()
             with connection:
@@ -343,7 +334,6 @@ class MySQLPersistenceWrapper(ApplicationBase):
             return None
 
     def insert_exercise(self, exercise: Exercise) -> Optional[int]:
-        """Insert a new exercise; return new exercise id or None."""
         try:
             connection = self._connection_pool.get_connection()
             with connection:
@@ -389,7 +379,6 @@ class MySQLPersistenceWrapper(ApplicationBase):
     def insert_user_favorite_workout(
         self, user_id: int, workout_id: int
     ) -> bool:
-        """Insert a favorite workout for a user."""
         try:
             connection = self._connection_pool.get_connection()
             with connection:
@@ -409,15 +398,31 @@ class MySQLPersistenceWrapper(ApplicationBase):
                 f"{inspect.currentframe().f_code.co_name}: {e}"
             )
             return False
-
-    # ============================================================
-    #                   PRIVATE HELPER METHODS
-    # ============================================================
+    
+    def insert_user_completed_workout(self, user_id: int, workout_id: int) -> bool:
+        """Record that a user completed a workout."""
+        try:
+            connection = self._connection_pool.get_connection()
+            with connection:
+                cursor = connection.cursor()
+                with cursor:
+                    cursor.execute(
+                        """
+                        INSERT INTO user_completed_workouts (user_id, workout_id, date_completed)
+                        VALUES (%s, %s, CURDATE())
+                        """,
+                        (user_id, workout_id),
+                    )
+                    connection.commit()
+                    return True
+        except Exception as e:
+            self._logger.log_error(
+                f"{inspect.currentframe().f_code.co_name}: {e}"
+            )
+            return False
 
    
-
     def _initialize_database_connection_pool(self, config: dict):
-        """Initializes database connection pool."""
         try:
             self._logger.log_debug("Creating connection pool...")
             cnx_pool = MySQLConnectionPool(
@@ -440,7 +445,6 @@ class MySQLPersistenceWrapper(ApplicationBase):
             )
 
     def _populate_user_objects(self, results: List) -> List[User]:
-        """Populates and returns a list of User objects."""
         user_list: List[User] = []
         try:
             for row in results:
@@ -461,7 +465,6 @@ class MySQLPersistenceWrapper(ApplicationBase):
             return []
 
     def _populate_workout_objects(self, results: List) -> List[Workout]:
-        """Populates and returns a list of Workout objects."""
         workout_list: List[Workout] = []
         try:
             for row in results:

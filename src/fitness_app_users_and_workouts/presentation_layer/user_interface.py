@@ -1,4 +1,4 @@
-"""Defines the Console User Interface for the Fitness App."""
+# Defines the Console User Interface for the Fitness App.
 
 import sys
 from typing import List
@@ -15,37 +15,35 @@ from fitness_app_users_and_workouts.infrastructure_layer.exercise import Exercis
 class UserInterface(ApplicationBase):
     """Console UI for the Fitness App."""
 
-    def __init__(self, config: dict) -> None:
+    def __init__(self, config: dict, app_services: AppServices) -> None:
         """Initialize UI."""
         self._config_dict = config
         self.META = config["meta"]
+        self.app_services = app_services
 
         super().__init__(
             subclass_name=self.__class__.__name__,
             logfile_prefix_name=self.META["log_prefix"],
         )
 
-        self.app_services = AppServices(config)
         self._logger.log_debug("User Interface initialized!")
 
-    # ============================================================
-    # DISPLAY MENU
-    # ============================================================
+
+# DISPLAY MENU
+
     def display_menu(self) -> None:
-        """Display the Fitness App menu."""
         print("\n\t\tFitness App Menu\n")
         print("\t1. List Users")
         print("\t2. List Workouts")
         print("\t3. Add User")
         print("\t4. Favorite Workout(s) for a User")
         print("\t5. Add Workout")
-        print("\t6. Exit\n")
+        print("\t6. Mark Workout as Completed")
+        print("\t7. Exit\n")
 
-    # ============================================================
-    # PROCESS MENU CHOICE
-    # ============================================================
+# PROCESS MENU CHOICE
+
     def process_menu_choice(self) -> None:
-        """Process user menu choice."""
         menu_choice = input("\tMenu Choice: ").strip()
 
         match menu_choice:
@@ -60,16 +58,17 @@ class UserInterface(ApplicationBase):
             case "5":
                 self.add_workout()
             case "6":
+                self.mark_workout_completed()
+            case "7":
                 print("Goodbye!")
                 sys.exit(0)
             case _:
                 print(f"Invalid menu choice: {menu_choice}")
 
-    # ============================================================
-    # MENU OPTION 1: LIST USERS
-    # ============================================================
+
+# MENU OPTION 1: LIST USERS
+
     def list_users(self) -> None:
-        """List all users with their completed and favorite workouts."""
         users: List[User] = self.app_services.get_all_users()
 
         if not users:
@@ -119,11 +118,9 @@ class UserInterface(ApplicationBase):
         print("\nUSERS\n")
         print(table)
 
-    # ============================================================
-    # MENU OPTION 2: LIST WORKOUTS
-    # ============================================================
+# MENU OPTION 2: LIST WORKOUTS
+
     def list_workouts(self) -> None:
-        """List all workouts with their exercises."""
         workouts: List[Workout] = self.app_services.get_all_workouts()
 
         if not workouts:
@@ -155,11 +152,10 @@ class UserInterface(ApplicationBase):
         print("\nWORKOUTS\n")
         print(table)
 
-    # ============================================================
-    # MENU OPTION 3: ADD USER
-    # ============================================================
+
+# MENU OPTION 3: ADD USER
+
     def add_user(self) -> None:
-        """Prompt the user for info and add a new user."""
         print("\nAdd New User\n")
 
         first_name = input("First Name: ").strip()
@@ -185,11 +181,10 @@ class UserInterface(ApplicationBase):
         else:
             print("\nFailed to add user. See logs for details.\n")
 
-    # ============================================================
-    # MENU OPTION 4: FAVORITE WORKOUT(S) FOR A USER
-    # ============================================================
+
+# MENU OPTION 4: FAVORITE WORKOUT(S) FOR A USER
+
     def favorite_workout_for_user(self) -> None:
-        """Allow selecting a user and workout(s) to mark as favorite."""
         print("\nFavorite Workout(s) for a User\n")
 
         users = self.app_services.get_all_users()
@@ -262,11 +257,10 @@ class UserInterface(ApplicationBase):
 
         print(f"\n{success_count} workout(s) favorited for user {user_id}.\n")
 
-    # ============================================================
-    # MENU OPTION 5: ADD WORKOUT (OPTION B: PICK EXISTING OR ADD NEW)
-    # ============================================================
+
+# MENU OPTION 5: ADD WORKOUT (OPTION B: PICK EXISTING OR ADD NEW)
+
     def add_workout(self) -> None:
-        """Add a new workout, selecting existing exercises and/or adding new ones."""
         print("\nAdd New Workout\n")
 
         title = input("Workout Title: ").strip()
@@ -308,7 +302,6 @@ class UserInterface(ApplicationBase):
         else:
             print("\nNo existing exercises found.\n")
 
-        # 2) Optionally add new exercises
         new_exercises_data: list[dict] = []
         while True:
             add_ex = input(
@@ -343,16 +336,64 @@ class UserInterface(ApplicationBase):
         else:
             print("\nFailed to add workout. See logs for details.\n")
 
-    # ============================================================
-    # START LOOP
-    # ============================================================
+        
+    def mark_workout_completed(self) -> None:
+        print("\nMark Workout as Completed\n")
+
+    # Load users
+        users = self.app_services.get_all_users()
+        if not users:
+            print("No users found.")
+            return
+
+    # Display users
+        table = PrettyTable()
+        table.field_names = ["ID", "First Name", "Last Name"]
+        for u in users:
+            table.add_row([u.id, u.first_name, u.last_name])
+        print(table)
+
+        try:
+            user_id = int(input("Enter User ID: ").strip())
+        except ValueError:
+            print("Invalid User ID.")
+            return
+
+    # Load workouts
+        workouts = self.app_services.get_all_workouts()
+        if not workouts:
+            print("No workouts found.")
+            return
+
+        table = PrettyTable()
+        table.field_names = ["ID", "Title"]
+        for w in workouts:
+            table.add_row([w.id, w.title])
+        print(table)
+
+        try:
+            workout_id = int(input("Enter Workout ID: ").strip())
+        except ValueError:
+            print("Invalid Workout ID.")
+            return
+
+        success = self.app_services.complete_workout(user_id, workout_id)
+
+        if success:
+            print("\nWorkout marked as completed!\n")
+        else:
+            print("\nFailed to record completed workout.\n")
+
+
+
     def start(self) -> None:
-        """Start UI loop."""
         self._logger.log_debug("User interface started!")
 
         while True:
             self.display_menu()
             self.process_menu_choice()
+
+    
 
 
 

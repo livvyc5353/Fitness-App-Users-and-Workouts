@@ -1,12 +1,12 @@
-/* *************************************************************
-   Create tables for the fitness_app database.
-*************************************************************** */
+
+-- Create tables for the fitness_app database.
+
 
 USE `fitness_app`;
 
--- ===========================
+
 -- USERS TABLE
--- ===========================
+
 DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
@@ -18,9 +18,9 @@ CREATE TABLE `users` (
   `gender` CHAR(1)
 );
 
--- ===========================
+
 -- WORKOUTS TABLE
--- ===========================
+
 DROP TABLE IF EXISTS `workouts`;
 
 CREATE TABLE `workouts` (
@@ -29,9 +29,9 @@ CREATE TABLE `workouts` (
   `description` VARCHAR(250) NOT NULL
 );
 
--- ===========================
+
 -- EXERCISES TABLE
--- ===========================
+
 DROP TABLE IF EXISTS `exercises`;
 
 CREATE TABLE `exercises` (
@@ -40,10 +40,9 @@ CREATE TABLE `exercises` (
   `instructions` VARCHAR(500)
 );
 
--- ===========================
+
 -- WORKOUT_EXERCISES JOIN TABLE
--- (which exercises belong in which workouts)
--- ===========================
+
 DROP TABLE IF EXISTS `workout_exercises`;
 
 CREATE TABLE `workout_exercises` (
@@ -61,9 +60,9 @@ CREATE TABLE `workout_exercises` (
     ON UPDATE CASCADE
 );
 
--- ===========================
+
 -- USER COMPLETED WORKOUTS
--- ===========================
+
 DROP TABLE IF EXISTS `user_completed_workouts`;
 
 CREATE TABLE `user_completed_workouts` (
@@ -79,9 +78,8 @@ CREATE TABLE `user_completed_workouts` (
     ON DELETE CASCADE
 );
 
--- ===========================
 -- USER FAVORITE WORKOUTS
--- ===========================
+
 DROP TABLE IF EXISTS `user_favorite_workouts`;
 
 CREATE TABLE `user_favorite_workouts` (

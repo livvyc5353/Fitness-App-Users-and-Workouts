@@ -16,19 +16,18 @@ from fitness_app_users_and_workouts.infrastructure_layer.exercise import Exercis
 class AppServices(ApplicationBase):
     """AppServices class for interacting with the Fitness App database."""
 
-    def __init__(self, config: dict) -> None:
+    def __init__(self, config: dict, db) -> None:
         """Initializes object."""
         self._config_dict = config
+        self.DB = db
         self.META = config["meta"]
         super().__init__(
             subclass_name=self.__class__.__name__,
             logfile_prefix_name=self.META["log_prefix"],
         )
-        self.DB = MySQLPersistenceWrapper(config)
+        
 
-    # ============================================================
-    # USER READ METHODS
-    # ============================================================
+
 
     def get_all_users(self) -> List[User]:
         """Return all users with completed and favorite workouts populated."""
@@ -64,9 +63,7 @@ class AppServices(ApplicationBase):
             )
             return "[]"
 
-    # ============================================================
-    # WORKOUT READ METHODS
-    # ============================================================
+
 
     def get_all_workouts(self) -> List[Workout]:
         """Returns all workouts with exercises."""
@@ -123,9 +120,6 @@ class AppServices(ApplicationBase):
             )
             return []
 
-    # ============================================================
-    # USER WORKOUT RELATIONSHIP METHODS (JSON UTILITIES)
-    # ============================================================
 
     def get_user_favorites_as_json(self, user_id: int) -> str:
         """Returns user's favorite workouts as JSON."""
@@ -155,9 +149,7 @@ class AppServices(ApplicationBase):
             )
             return "[]"
 
-    # ============================================================
-    # WRITE METHODS (ADD USER / WORKOUT / FAVORITE)
-    # ============================================================
+
 
     def add_user(
         self,
@@ -194,13 +186,7 @@ class AppServices(ApplicationBase):
         existing_exercise_ids: list[int],
         new_exercises_data: list[dict],
     ) -> bool:
-        """
-        Create and persist a new workout with exercises.
-
-        existing_exercise_ids: list of exercise IDs to link
-        new_exercises_data: list of dicts like:
-          {"name": "Push-Up", "instructions": "Do 10 reps"}
-        """
+   
         self._logger.log_debug(
             f"In {inspect.currentframe().f_code.co_name}()..."
         )
@@ -246,4 +232,19 @@ class AppServices(ApplicationBase):
                 f"{inspect.currentframe().f_code.co_name}: {e}"
             )
             return False
+
+    def complete_workout(self, user_id: int, workout_id: int) -> bool:
+        """Record that a user completed a workout."""
+        self._logger.log_debug(
+            f"In {inspect.currentframe().f_code.co_name}(): "
+            f"Marking workout {workout_id} completed for user {user_id}"
+        )
+        try:
+            return self.DB.insert_user_completed_workout(user_id, workout_id)
+        except Exception as e:
+            self._logger.log_error(
+                f"{inspect.currentframe().f_code.co_name}: {e}"
+            )
+            return False
+
 

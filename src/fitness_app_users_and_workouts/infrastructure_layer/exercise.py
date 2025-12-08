@@ -1,10 +1,9 @@
-"""Contains the definition for the Exercise class."""
+# Contains the definition for the Exercise class
 
 import json
 
 
 class Exercise:
-    """Implements an Exercise entity."""
 
     def __init__(self) -> None:
         self.id: int = 0
@@ -18,7 +17,6 @@ class Exercise:
         return self.to_json()
 
     def to_json(self) -> str:
-        """Serialize Exercise into JSON."""
         exercise_dict = {
             "id": self.id,
             "name": self.name,

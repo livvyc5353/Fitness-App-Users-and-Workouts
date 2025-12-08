@@ -1,4 +1,3 @@
-"""Provides LoggingService convenience class for application logging."""
 
 import logging
 import logging.handlers
@@ -6,10 +5,9 @@ from fitness_app_users_and_workouts.settings import Settings
 import os
 
 class LoggingService():
-    """Provides logging services."""
 
     def __init__(self, class_name:str, logfile_prefix_name:str=None)->None:
-        """Initialize instance."""
+       
         
         self._logger = logging.getLogger(class_name)
         self._logger.propagate = False

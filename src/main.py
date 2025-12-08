@@ -1,4 +1,6 @@
-"""Entry point for the Fitness App Application."""
+import sys
+sys.path.insert(0, "src")
+
 
 import json
 from argparse import ArgumentParser
@@ -9,22 +11,23 @@ from fitness_app_users_and_workouts.presentation_layer.user_interface import Use
 
 
 def main():
-    """Entry point."""
     args = configure_and_parse_commandline_arguments()
 
     # Load config file
     with open(args.configfile, 'r') as f:
         config = json.loads(f.read())
 
+    db = MySQLPersistenceWrapper(config)
+    service_layer = AppServices(config, db)
+    ui = UserInterface(config, service_layer)
 
-    ui = UserInterface(config)
+
     ui.start()
 
-    service_layer = AppServices(config)
     users_list = service_layer.get_all_users_as_json()
     print(users_list)
 
-    db = MySQLPersistenceWrapper(config)
+
 
     print("\n=== ALL USERS ===")
     users = db.select_all_users()
@@ -59,7 +62,6 @@ def main():
 
 
 def configure_and_parse_commandline_arguments():
-    """Configure and parse command-line arguments."""
     parser = ArgumentParser(
         prog='main.py',
         description='Start the Fitness App with a configuration file.',
